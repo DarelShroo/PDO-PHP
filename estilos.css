@@ -1,0 +1,9 @@
+.inputs {
+    width: 100px;
+    height: 20px;
+    background-color: rgb(138, 226, 238);
+}
+
+.centrar {
+    text-align: center;
+}
