@@ -1,15 +1,16 @@
 <?php
     include '../conexionBD.php';
+
     function insertarHabitacion()
     {
         $pdo = conectaDb();
         $stmt = $pdo->prepare("call insertarHabitacion(?, ?, ?, ?, ?, @out1, @out2)");
-        if(isset($_POST['codHotelInput']) &&
+        if(isset($_POST['codHotelOption']) &&
         isset($_POST['numHabitacionInput']) &&
         isset($_POST['capacidadInput']) &&
         isset($_POST['preciodiaInput']) 
         ){
-            $codHotel=$_POST["codHotelInput"];
+            $codHotel=$_POST["codHotelOption"];
             $numHabitacion=$_POST["numHabitacionInput"];
             $capacidad=$_POST["capacidadInput"];
             $preciodia=$_POST["preciodiaInput"];
@@ -19,7 +20,14 @@
             }else {
                 $activa =0;
             }
-            $stmt->execute([$codHotel,$numHabitacion, $capacidad, $preciodia, $activa]);
+
+            $stmt -> bindParam(1, $codHotel, PDO::PARAM_STR);
+            $stmt -> bindParam(2, $numHabitacion, PDO::PARAM_STR);
+            $stmt -> bindParam(3, $capacidad, PDO::PARAM_INT);
+            $stmt -> bindParam(4, $preciodia, PDO::PARAM_INT);
+            $stmt -> bindParam(5, $activa, PDO::PARAM_BOOL);
+
+            $stmt->execute();
         }
         $stmt = $pdo -> query('select @out1 as salida1, @out2 as salida2');
         $row = $stmt->fetch(); 
@@ -45,12 +53,18 @@
                     <th><label for="activa">activa</label><br></th>
                 </tr>
                 <tr>
-                    <td><input type="text" id="codHotelInput" name="codHotelInput" value="Ej: 002"></td>
-                    <td><input type="text" id="numHabitacionInput" name="numHabitacionInput" value="Ej: 501"></td>
-                    <td><input type="text" id="capacidadInput" name="capacidadInput" value="Ej: 4"></td>
-                    <td><input type="text" id="preciodiaInput" name="preciodiaInput" value="Ej: 20"></td>
+                    <td><select name="codHotelOption" id="codHotelOption">';
+                    $pdo = conectaDb();
+                    $stmt = $pdo -> query('SELECT codHotel, nomHotel FROM hoteles');
+                    foreach ($stmt as $row) {
+                        echo '<option value="'.$row["codHotel"].'"  id="'.$row["codHotel"].'" name="'.$row["codHotel"].'">'.$row["codHotel"].'+'.$row["nomHotel"].'</option>';
+                    }
+                    echo '</select></td>
+                    <td><input type="text" id="numHabitacionInput" name="numHabitacionInput" minlength="1" maxlength="4" value="Ej: 501" required></td>
+                    <td><input type="number" id="capacidadInput" name="capacidadInput" min="1" max="255" value="Ej: 4" required></td>
+                    <td><input type="number" id="preciodiaInput" name="preciodiaInput" min="-128" max="255"  required></td>
                     <td><input type="checkbox" id="activaInput" name="activaInput" check=""></td>
-                    <td><input type="submit" value="Ejecutar Procedimiento"></td>
+                    <td><button type="submit">Ejecutar Procedimiento</button></td>
                 </tr>
             </table>
           </form> ';

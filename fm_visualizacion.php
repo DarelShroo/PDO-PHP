@@ -2,7 +2,6 @@
     include './conexionBD.php';
     echo '<link rel="stylesheet" href="./estilos.css" type="text/css">';
     echo '<script src="borrarModificar.js"></script>';
-
     $db = conectaDb();
     $stmt = $db -> query('SELECT * FROM habitaciones INNER JOIN hoteles on hoteles.codHotel=habitaciones.codHotel');
     echo '<form action="baja.php" method="POST" id="visualizar">
@@ -27,8 +26,8 @@
                 foreach ($stmt as $row) {
                     echo '<tr>
                              <td>'.$row["codHotel"].'</td>'.
-                             '<td>'.$row["numHabitacion"].'</td>'.
                              '<td>'.$row["nomHotel"].'</td>'.
+                             '<td>'.$row["numHabitacion"].'</td>'.
                              '<td>'.$row["capacidad"].'</td>'.
                              '<td>'.$row["preciodia"].'</td>'.
                              '<td>'.$row["activa"].'</td>'.
@@ -45,7 +44,7 @@
             
                 echo '<td><select onchange="location = this.value;">';
                 echo '<option selected="selected" value="fm_visualizacion.php">Funciones</option>';
-                echo '<option value="sumaTotalEstancias.php">sumaTotalEstancias</option>';
+                echo '<option value="./funciones/sumaTotalEstancias.php">sumaTotalEstancias</option>';
                 echo '</select></td>';
                 echo '<td colspan="5"></td>
                       <td colspan="2"><a href="fm_altaHabitacion.php"><button type="button">Alta habitación</button></a></td>';

@@ -12,7 +12,10 @@
             $codHotel=$_POST["codHotelInput"];
             $nomHotel=$_POST["nomHotelInput"];
             $capacidad=$_POST["preciodiaInput"];
-            $stmt->execute([$codHotel,$nomHotel, $capacidad]);
+            $stmt -> bindParam(1, $codHotel, PDO::PARAM_STR);
+            $stmt -> bindParam(2, $nomHotel, PDO::PARAM_STR);
+            $stmt -> bindParam(3, $capacidad, PDO::PARAM_INT);
+            $stmt->execute();
         }
         $row = $stmt->fetch();
         $stmt = $pdo -> query('select @out1 as salida1, @out2 as salida2');
@@ -38,9 +41,9 @@
                     <th><label for="capacida">Precio dia</label><br></th>
                 </tr>
                 <tr>
-                    <td><input type="text" id="codHotelInput" name="codHotelInput" value="Ej: A00"></td>
-                    <td><input type="text" id="nomHotelInput" name="nomHotelInput" value="Ej: Mariachi"></td>
-                    <td><input type="text" id="preciodiaInput" name="preciodiaInput" value="Ej: 5"></td>                    
+                    <td><input type="text" id="codHotelInput" name="codHotelInput" value="Ej: A00" maxlength="6" required></td>
+                    <td><input type="text" id="nomHotelInput" name="nomHotelInput" value="Ej: Mariachi" minlength="0" maxlength="4"  maxlength="4" required></td>
+                    <td><input type="number" id="preciodiaInput" name="preciodiaInput" value="Ej: 5" min="-128" max="255" required></td>                    
                     <td><input type="submit" value="Ejecutar Procedimiento"></td>
                 </tr>
             </table>

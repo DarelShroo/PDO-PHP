@@ -9,7 +9,10 @@
         if(isset($_POST["nomHotelInput"])){
             $nomHotel=$_POST["nomHotelInput"];
         }
-        $stmt->execute([$nomHotel]);
+
+        $stmt -> bindParam(1, $nomHotel, PDO::PARAM_STR);
+
+        $stmt->execute();
         echo '<table border="2">';
         echo '<tr>';
         echo '<th>numHabitacion</th>';
@@ -33,7 +36,7 @@
                     <th><label for="nombreHotel">Nombre Hotel</label><br></th>
                 </tr>
                 <tr>
-                    <td><input type="text" id="nomHotelInput" name="nomHotelInput" value="Ej: Mariachi"></td>
+                    <td><input type="text" id="nomHotelInput" name="nomHotelInput" minlength="1" maxlength="60"  value="Ej: Mariachi" required></td>
                     <td><input type="submit" value="Ejecutar Procedimiento"></td>
                 </tr>
             </table>
@@ -41,5 +44,6 @@
 
     lista_habitaciones_nomHotel();
     echo '<br><br><a href="./../fm_visualizacion.php"><button>Volver</button></a>';
-
 ?>
+
+

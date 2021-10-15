@@ -40,9 +40,9 @@
           }
           echo '</select></td>';
           echo
-                        '<td><input type="text" id="numHabitacion'.$idregistro.'" name="numHabitacion'.$idregistro.'"  value="'.$row["numHabitacion"].'"></td>'.
-                        '<td><input type="text" id="capacidad'.$idregistro.'" name="capacidad'.$idregistro.'" value="'.$row["capacidad"].'" ></td>'.
-                        '<td><input type="text" id="preciodia'.$idregistro.'" name="preciodia'.$idregistro.'" value="'.$row["preciodia"].'"></td>';
+                        '<td><input type="text" id="numHabitacion'.$idregistro.'" name="numHabitacion'.$idregistro.'" minlength="1" maxlength="4" value="'.$row["numHabitacion"].'"></td>'.
+                        '<td><input type="number" id="capacidad'.$idregistro.'" name="capacidad'.$idregistro.'" min="1" max="255" value="'.$row["capacidad"].'" ></td>'.
+                        '<td><input type="number" id="preciodia'.$idregistro.'" name="preciodia'.$idregistro.'" min="1" max="2147483647" value="'.$row["preciodia"].'"></td>';
           if ($row["activa"]==1) {
               $check = 'checked';
           } else {

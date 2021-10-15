@@ -19,6 +19,16 @@
                 $capacidad = $_POST['capacidad'.$i];
                 $preciodia = $_POST['preciodia'.$i];
                 
+                $statement -> bindParam(1, $codHotel, PDO::PARAM_STR);
+                $statement -> bindParam(2, $numHabitacion, PDO::PARAM_STR);
+                $statement -> bindParam(3, $capacidad, PDO::PARAM_INT);
+                $statement -> bindParam(4, $preciodia, PDO::PARAM_INT);
+                $statement -> bindParam(5, $activa, PDO::PARAM_BOOL);
+                $statement -> bindParam(6, $codHotelOld, PDO::PARAM_STR);
+                $statement -> bindParam(7, $numHabitacionOld, PDO::PARAM_STR);
+
+
+
                 if (isset($_POST['activa'.$i])) {
                     $activa = 1;
                 } else {

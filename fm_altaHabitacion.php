@@ -2,16 +2,15 @@
     include './conexionBD.php';
     try {
         echo '<link rel="stylesheet" href="estilos.css" type="text/css">';
-        $db = conectaDb();
-        $stmt = $db -> query('SELECT codHotel, nomHotel FROM hoteles');
-        $insertNewHotel = $db->prepare("INSERT INTO habitaciones (codHotel, numHabitacion, capacidad, preciodia, activa) VALUES (:codHotel, :numHabitacion, :capacidad, :preciodia, :activa)");
+        $pdo = conectaDb();
+        $stmt = $pdo -> query('SELECT codHotel, nomHotel FROM hoteles');
+        $insertNewHotel = $pdo->prepare("INSERT INTO habitaciones (codHotel, numHabitacion, capacidad, preciodia, activa) VALUES (:codHotel, :numHabitacion, :capacidad, :preciodia, :activa)");
         function form($insertNewHotel, $activa)
         {
             $codHotel = $_POST["codHotel"];
             $numHabitacion=$_POST["numHabitacion"];
             $capacidad = $_POST["capacidad"];
             $preciodia = $_POST["preciodia"];
-            //$activa = (strpos($_POST["activa"], 'on')!==false) ? 1:0;
 
             $insertNewHotel->bindParam(':codHotel', $codHotel, PDO::PARAM_STR);
             $insertNewHotel->bindParam(':numHabitacion', $numHabitacion, PDO::PARAM_STR);
@@ -40,16 +39,16 @@
                 </tr>';
         echo '<tr>
                         <td>
-                            <select name="codHotel" id="codHotel">';
+                            <select name="codHotel" id="codHotel" required>';
         foreach ($stmt as $row) {
             echo '<option value="'.$row["codHotel"].'"  id="'.$row["codHotel"].'" name="'.$codHotel["codHotel"].'">'.$row["codHotel"].'+'.$row["nomHotel"].'</option>';
         }
         echo '</select>';
         echo '</td>
-                        <td><input type="text" class="inputs" id="numHabitacion" name="numHabitacion" required  maxlength="8" size="10"></td>
-                        <td><input type="text" class="inputs" id="capacidad" name="capacidad" required  maxlength="8" size="10"></td>
-                        <td><input type="text" class="inputs" id="preciodia" name="preciodia" required  maxlength="8" size="10"></td>
-                        <td><input type="number" title="el valor debe ser 0 o 1" value="0" min="0" max="1" class="inputs" id="activa" name="activa"  maxlength="8" size="10" pattern="0|1" checked></td>
+                        <td><input type="text" class="inputs" id="numHabitacion" name="numHabitacion"  maxlength="4" required></td>
+                        <td><input type="number" class="inputs" id="capacidad" name="capacidad" min="1" max="127" required></td>
+                        <td><input type="number" class="inputs" id="preciodia" name="preciodia" min="1" max="2147483647" required></td>
+                        <td><input type="checkbox" title="el valor debe ser 0 o 1" class="inputs" id="activa" name="activa" checked></td>
                      </tr>';
         echo '</tr>
                         <td colspan="4"></td>
